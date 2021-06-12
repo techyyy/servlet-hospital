@@ -28,7 +28,7 @@ public class PatientDAO implements PatientManager {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        resultSet.getDate(5));
+                        resultSet.getDate(5).toLocalDate());
                 patients.add(patient);
             }
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class PatientDAO implements PatientManager {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        resultSet.getDate(5));
+                        resultSet.getDate(5).toLocalDate());
                 patients.add(patient);
             }
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class PatientDAO implements PatientManager {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        resultSet.getDate(5));
+                        resultSet.getDate(5).toLocalDate());
                 patients.add(patient);
             }
         } catch (SQLException e) {
@@ -111,7 +111,7 @@ public class PatientDAO implements PatientManager {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        resultSet.getDate(5));
+                        resultSet.getDate(5).toLocalDate());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,7 +146,7 @@ public class PatientDAO implements PatientManager {
             preparedStatement.setString(1, patient.getFirstName());
             preparedStatement.setString(2, patient.getLastName());
             preparedStatement.setString(3, patient.getDiagnosis());
-            preparedStatement.setDate(4, patient.getBirthDate());
+            preparedStatement.setDate(4, Date.valueOf(patient.getBirthDate()));
             preparedStatement.setInt(5, patient.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class RegisterAPatientSubmit extends Command {
     @Override
@@ -19,7 +20,7 @@ public class RegisterAPatientSubmit extends Command {
                 request.getParameter("FirstName"),
                 request.getParameter("LastName"),
                 request.getParameter("Diagnosis"),
-                Date.valueOf(request.getParameter("BirthDate")));
+                LocalDate.parse(request.getParameter("BirthDate")));
         new UserDAO().insertPatient(patient);
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }

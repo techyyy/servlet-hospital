@@ -1,6 +1,6 @@
 package com.hospital.Hospital.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Patient {
 
@@ -8,13 +8,13 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String diagnosis;
-    private Date birthDate;
+    private LocalDate birthDate;
     private boolean isDischarged;
 
     public Patient() {
     }
 
-    public Patient(int id, String firstName, String lastName, String diagnosis, Date birthDate) {
+    public Patient(int id, String firstName, String lastName, String diagnosis, LocalDate birthDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,7 +22,7 @@ public class Patient {
         this.birthDate = birthDate;
     }
 
-    public Patient(int id, String firstName, String lastName, String diagnosis, Date birthDate, boolean isDischarged) {
+    public Patient(int id, String firstName, String lastName, String diagnosis, LocalDate birthDate, boolean isDischarged) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,11 +63,11 @@ public class Patient {
         this.diagnosis = diagnosis;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

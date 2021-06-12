@@ -188,7 +188,7 @@ public class UserDAO implements UserManager {
             psPatient.setString(1, patient.getFirstName());
             psPatient.setString(2, patient.getLastName());
             psPatient.setString(3, patient.getDiagnosis());
-            psPatient.setDate(4, patient.getBirthDate());
+            psPatient.setDate(4, Date.valueOf(patient.getBirthDate()));
             psPatient.setBoolean(5, false);
             psPatient.executeUpdate();
         } catch (SQLException e) {
@@ -287,7 +287,7 @@ public class UserDAO implements UserManager {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        resultSet.getDate(5));
+                        resultSet.getDate(5).toLocalDate());
                 patients.add(patient);
             }
         } catch (SQLException e) {

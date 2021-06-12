@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class EditPatientApply extends Command {
     @Override
@@ -22,7 +22,7 @@ public class EditPatientApply extends Command {
                 request.getParameter("FirstName"),
                 request.getParameter("LastName"),
                 request.getParameter("Diagnosis"),
-                Date.valueOf(request.getParameter("BirthDate")));
+                LocalDate.parse(request.getParameter("BirthDate")));
         new PatientDAO().updatePatient(patient);
         if(session.getAttribute("userRole").toString().equals("DOCTOR")) {
             return ServletPaths.SERVLET_VIEW_PATIENTS_BY_DOCTOR;
