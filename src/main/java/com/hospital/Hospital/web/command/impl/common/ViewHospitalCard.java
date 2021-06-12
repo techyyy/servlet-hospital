@@ -1,6 +1,6 @@
 package com.hospital.Hospital.web.command.impl.common;
 
-import com.hospital.Hospital.db.HospitalManagerDAO;
+import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.DiseaseHistory;
 import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
@@ -15,8 +15,7 @@ import java.util.List;
 public class ViewHospitalCard extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
-        HospitalManagerDAO hospitalManagerDAO = HospitalManagerDAO.getInstance();
-        List<DiseaseHistory> hospitalCard = hospitalManagerDAO.getHospitalCard(Integer.parseInt(request.getParameter("patientId")));
+        List<DiseaseHistory> hospitalCard = new UserDAO().getHospitalCard(Integer.parseInt(request.getParameter("patientId")));
         request.setAttribute("hospitalCard", hospitalCard);
         return JspPaths.VIEW_HOSPITAL_CARD;
     }

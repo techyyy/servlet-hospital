@@ -1,6 +1,6 @@
 package com.hospital.Hospital.web.command.impl.outofcontrol;
 
-import com.hospital.Hospital.db.HospitalManagerDAO;
+import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.user.User;
 import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
@@ -32,9 +32,7 @@ public class Login extends Command {
         String login = request.getParameter("Username");
         String password = request.getParameter("Password");
 
-        HospitalManagerDAO loginDAO = HospitalManagerDAO.getInstance();
-
-        User user = loginDAO.getUserByLogin(login);
+        User user = new UserDAO().getUserByLogin(login);
 
         if(user != null) {
             if (user.getPassword().equals(password)) {

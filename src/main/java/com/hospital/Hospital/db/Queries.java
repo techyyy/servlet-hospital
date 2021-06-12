@@ -11,7 +11,7 @@ public class Queries {
             "            JOIN doctor d ON pd.doctor_id = d.id\n" +
             "            JOIN patient p ON pd.patient_id = p.id\n" +
             "            WHERE d.id = ? AND p.isDischarged = false " +
-            "            ORDER BY %s DESC";
+            "            ORDER BY %s";
     public static final String SELECT_USER_BY_LOGIN = "SELECT * FROM login WHERE username = ?";
     public static final String SELECT_DOCTOR_BY_USER_ID = "SELECT * FROM doctor WHERE login_id = ?";
     public static final String SELECT_ALL_DOCTORS = "SELECT * FROM doctor";

@@ -17,14 +17,14 @@ public class ConnectionPool {
             instance = new ConnectionPool();
         return instance;
     }
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         Connection con = null;
         try {
             Context initContext = new InitialContext();
             Context envContext  = (Context)initContext.lookup("java:/comp/env");
             DataSource ds = (DataSource)envContext.lookup("jdbc/myhospital");
             con = ds.getConnection();
-        } catch (NamingException ex) {
+        } catch (NamingException | SQLException ex) {
             ex.printStackTrace();
         }
         return con;
@@ -40,6 +40,24 @@ public class ConnectionPool {
             } catch (SQLException e) {
                 System.err.println("Can't close result set" + e.getMessage());
             }
+        }
+    }
+
+    public static void commitAndClose(Connection con) {
+        try {
+            con.commit();
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void rollbackAndClose(Connection con) {
+        try {
+            con.rollback();
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }

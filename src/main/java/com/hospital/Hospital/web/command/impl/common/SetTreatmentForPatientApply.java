@@ -1,6 +1,6 @@
 package com.hospital.Hospital.web.command.impl.common;
 
-import com.hospital.Hospital.db.HospitalManagerDAO;
+import com.hospital.Hospital.db.impl.PatientDAO;
 import com.hospital.Hospital.model.PatientHasDoctor;
 import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
@@ -22,8 +22,7 @@ public class SetTreatmentForPatientApply extends Command {
                     Integer.parseInt(session.getAttribute("doctorId").toString()),
                     Integer.parseInt(request.getParameter("patientId")),
                     treatment);
-            HospitalManagerDAO hospitalManagerDAO = HospitalManagerDAO.getInstance();
-            hospitalManagerDAO.updateTreatment(phs);
+            new PatientDAO().updateTreatment(phs);
         }
         return ServletPaths.SERVLET_VIEW_PATIENTS_BY_DOCTOR;
 

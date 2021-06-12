@@ -5,6 +5,7 @@
       maxActive="100" maxIdle="30" maxWait="10000"
       username="root" password="admin"
       driverClassName="com.mysql.cj.jdbc.Driver"
+      defaultAutoCommit="false"
       defaultTransactionIsolation="READ_COMMITTED"
       url="jdbc:mysql://127.0.0.1:3306/myhospital"/>
 </Context>

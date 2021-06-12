@@ -1,6 +1,6 @@
 package com.hospital.Hospital.web.command.impl.common;
 
-import com.hospital.Hospital.db.HospitalManagerDAO;
+import com.hospital.Hospital.db.impl.PatientDAO;
 import com.hospital.Hospital.model.Patient;
 import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
@@ -16,7 +16,6 @@ import java.sql.Date;
 public class EditPatientApply extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
-        HospitalManagerDAO hospitalManagerDAO = HospitalManagerDAO.getInstance();
         HttpSession session = request.getSession();
         Patient patient = new Patient(
                 Integer.parseInt(request.getParameter("id")),
@@ -24,7 +23,7 @@ public class EditPatientApply extends Command {
                 request.getParameter("LastName"),
                 request.getParameter("Diagnosis"),
                 Date.valueOf(request.getParameter("BirthDate")));
-        hospitalManagerDAO.updatePatient(patient);
+        new PatientDAO().updatePatient(patient);
         if(session.getAttribute("userRole").toString().equals("DOCTOR")) {
             return ServletPaths.SERVLET_VIEW_PATIENTS_BY_DOCTOR;
         } else if(session.getAttribute("userRole").toString().equals("ADMIN")) {

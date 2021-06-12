@@ -1,7 +1,6 @@
 package com.hospital.Hospital.web.command.impl.admin;
 
-import com.hospital.Hospital.db.HospitalManagerDAO;
-import com.hospital.Hospital.model.Doctor;
+import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.Nurse;
 import com.hospital.Hospital.model.user.Role;
 import com.hospital.Hospital.model.user.User;
@@ -25,8 +24,7 @@ public class RegisterANurseSubmit extends Command {
                 request.getParameter("FirstName"),
                 request.getParameter("LastName"),
                 0);
-        HospitalManagerDAO hospitalManagerDAO = HospitalManagerDAO.getInstance();
-        hospitalManagerDAO.insertNurse(nurse, user);
+        new UserDAO().insertNurse(nurse, user);
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }
 }

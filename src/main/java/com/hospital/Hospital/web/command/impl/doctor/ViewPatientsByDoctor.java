@@ -1,6 +1,7 @@
 package com.hospital.Hospital.web.command.impl.doctor;
 
-import com.hospital.Hospital.db.HospitalManagerDAO;
+import com.hospital.Hospital.db.impl.PatientDAO;
+import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.Doctor;
 import com.hospital.Hospital.model.Patient;
 import com.hospital.Hospital.web.ActionType;
@@ -18,12 +19,10 @@ public class ViewPatientsByDoctor extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        HospitalManagerDAO patientDAO = HospitalManagerDAO.getInstance();
-        HospitalManagerDAO loginDAO = HospitalManagerDAO.getInstance();
         int userId = (int) session.getAttribute("userId");
-        Doctor doctor = loginDAO.getDoctorByLoginId(userId);
+        Doctor doctor = new UserDAO().getDoctorByLoginId(userId);
         session.setAttribute("doctorId", doctor.getId());
-        List<Patient> patients = patientDAO.findPatientsForDoctor(doctor.getId());
+        List<Patient> patients = new PatientDAO().findPatientsForDoctor(doctor.getId());
         request.setAttribute("patients", patients);
         return JspPaths.VIEW_PATIENTS;
     }

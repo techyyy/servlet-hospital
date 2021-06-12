@@ -1,6 +1,6 @@
 package com.hospital.Hospital.web.command.impl.admin;
 
-import com.hospital.Hospital.db.HospitalManagerDAO;
+import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.PatientHasDoctor;
 import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
@@ -18,8 +18,7 @@ public class SetDoctorForAPatientSubmit extends Command {
         PatientHasDoctor phd = new PatientHasDoctor(Integer.parseInt(request.getParameter("DoctorID")),
                 Integer.parseInt(request.getParameter("PatientID")),
                 "");
-        HospitalManagerDAO dao = HospitalManagerDAO.getInstance();
-        dao.insertPatientHasDoctor(phd);
+        new UserDAO().insertPatientHasDoctor(phd);
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }
 }
