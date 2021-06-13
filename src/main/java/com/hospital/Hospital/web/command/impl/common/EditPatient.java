@@ -11,9 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class EditPatient extends Command {
+
+    private final PatientDAO patientDAO;
+
+    public EditPatient() {patientDAO = new PatientDAO();}
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Patient patient = new PatientDAO().getPatientById(Integer.parseInt(request.getParameter("patientId")));
+        Patient patient = patientDAO.getPatientById(Integer.parseInt(request.getParameter("patientId")));
         request.setAttribute("patient", patient);
         return JspPaths.EDIT_PATIENT;
     }

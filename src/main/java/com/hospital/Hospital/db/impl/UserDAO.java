@@ -48,12 +48,13 @@ public class UserDAO implements UserManager {
             if(resultSet.next()) {
                 user = getUser(resultSet);
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return user;
     }
@@ -69,12 +70,13 @@ public class UserDAO implements UserManager {
             if(resultSet.next()) {
                 doctor = getDoctor(resultSet);
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return doctor;
     }
@@ -89,13 +91,14 @@ public class UserDAO implements UserManager {
             while (resultSet.next()) {
                 doctors.add(getDoctor(resultSet));
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return doctors;
     }
@@ -111,12 +114,13 @@ public class UserDAO implements UserManager {
             if(resultSet.next()) {
                 doctor = getDoctor(resultSet);
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return doctor;
     }
@@ -141,13 +145,14 @@ public class UserDAO implements UserManager {
             psDoctor.setString(3, doctor.getPosition());
             psDoctor.setInt(4, id);
             psDoctor.executeUpdate();
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return false;
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return true;
     }
@@ -172,13 +177,14 @@ public class UserDAO implements UserManager {
             psNurse.setString(2, nurse.getLastName());
             psNurse.setInt(3, id);
             psNurse.executeUpdate();
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return false;
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return true;
     }
@@ -193,29 +199,31 @@ public class UserDAO implements UserManager {
             psPatient.setDate(4, Date.valueOf(patient.getBirthDate()));
             psPatient.setBoolean(5, false);
             psPatient.executeUpdate();
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return false;
         } finally {
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return true;
     }
 
     @Override
-    public boolean insertPatientHasDoctor(PatientHasDoctor phd) {
+    public boolean insertPatientHasDoctor(PatientAssignment phd) {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try(PreparedStatement ps = connection.prepareStatement(INSERT_INTO_PATIENT_HAS_DOCTOR_TABLE)){
             ps.setInt(1, phd.getDoctorId());
             ps.setInt(2, phd.getPatientId());
             ps.executeUpdate();
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return false;
         } finally {
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return true;
     }
@@ -238,13 +246,14 @@ public class UserDAO implements UserManager {
                         resultSet.getString(7));
                 hospitalCard.add(dh);
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return hospitalCard;
     }
@@ -259,13 +268,14 @@ public class UserDAO implements UserManager {
             while (resultSet.next()) {
                 doctors.add(getDoctor(resultSet));
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return doctors;
     }

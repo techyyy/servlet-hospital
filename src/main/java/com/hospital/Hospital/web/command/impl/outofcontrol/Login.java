@@ -1,5 +1,6 @@
 package com.hospital.Hospital.web.command.impl.outofcontrol;
 
+import com.hospital.Hospital.db.impl.PatientDAO;
 import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.user.User;
 import com.hospital.Hospital.web.command.Command;
@@ -12,6 +13,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class Login extends Command {
+
+    private final UserDAO userDAO;
+
+    public Login() {userDAO = new UserDAO();}
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -21,7 +27,7 @@ public class Login extends Command {
         String login = request.getParameter("Username");
         String password = request.getParameter("Password");
 
-        User user = new UserDAO().getUserByLogin(login);
+        User user = userDAO.getUserByLogin(login);
 
         if(user != null) {
             if (user.getPassword().equals(password)) {

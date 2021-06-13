@@ -13,9 +13,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class GetSortedPatientsByAlphabet extends Command {
+
+    private final PatientDAO patientDAO;
+
+    public GetSortedPatientsByAlphabet() {patientDAO = new PatientDAO();}
+
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<Patient> patients = new PatientDAO().getSortedPatients(SQL_SORT_BY_ALPHABET);
+        List<Patient> patients = patientDAO.getSortedPatients(SQL_SORT_BY_ALPHABET);
         request.setAttribute("patients", patients);
         return JspPaths.VIEW_PATIENTS;
     }

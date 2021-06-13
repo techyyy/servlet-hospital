@@ -36,8 +36,8 @@ public class Doctor {
 
     public static class DoctorBuilder {
         private int id;
-        private String firstName;
-        private String lastName;
+        private final String firstName;
+        private final String lastName;
         private String position;
         private int loginId;
 

@@ -4,8 +4,8 @@ import com.hospital.Hospital.web.command.impl.*;
 import com.hospital.Hospital.web.command.impl.admin.*;
 import com.hospital.Hospital.web.command.impl.common.*;
 import com.hospital.Hospital.web.command.impl.doctor.DischargePatient;
-import com.hospital.Hospital.web.command.impl.doctor.GetSortedPatientsByAlphabetForDoctor;
-import com.hospital.Hospital.web.command.impl.doctor.GetSortedPatientsByBirthDateForDoctor;
+import com.hospital.Hospital.web.command.impl.doctor.GetSortedPatientsForDoctorByAlphabet;
+import com.hospital.Hospital.web.command.impl.doctor.GetSortedPatientsForDoctorByBirthDate;
 import com.hospital.Hospital.web.command.impl.doctor.ViewPatientsByDoctor;
 import com.hospital.Hospital.web.command.impl.nurse.Appointment;
 import com.hospital.Hospital.web.command.impl.outofcontrol.Login;
@@ -45,8 +45,8 @@ public class CommandManager {
         commands.put("setLanguage", new SetLanguage());
         commands.put("sortDoctorsByAlphabet", new GetSortedDoctorsByAlphabet());
         commands.put("sortDoctorsByPosition", new GetSortedDoctorsByPosition());
-        commands.put("sortMyPatientsByAlphabet", new GetSortedPatientsByAlphabetForDoctor());
-        commands.put("sortMyPatientsByBirthDate", new GetSortedPatientsByBirthDateForDoctor());
+        commands.put("sortMyPatientsByAlphabet", new GetSortedPatientsForDoctorByAlphabet());
+        commands.put("sortMyPatientsByBirthDate", new GetSortedPatientsForDoctorByBirthDate());
         commands.put("sortAllPatientsByAlphabet", new GetSortedPatientsByAlphabet());
         commands.put("sortAllPatientsByBirthDate", new GetSortedPatientsByBirthDate());
     }

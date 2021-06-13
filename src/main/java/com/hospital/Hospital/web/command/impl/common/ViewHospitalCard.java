@@ -12,9 +12,14 @@ import java.io.IOException;
 import java.util.List;
 
 public class ViewHospitalCard extends Command {
+
+    private final UserDAO userDAO;
+
+    public ViewHospitalCard() {userDAO = new UserDAO();}
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<DiseaseHistory> hospitalCard = new UserDAO().getHospitalCard(Integer.parseInt(request.getParameter("patientId")));
+        List<DiseaseHistory> hospitalCard = userDAO.getHospitalCard(Integer.parseInt(request.getParameter("patientId")));
         request.setAttribute("hospitalCard", hospitalCard);
         return JspPaths.VIEW_HOSPITAL_CARD;
     }

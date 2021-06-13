@@ -15,15 +15,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class GetSortedPatientsByAlphabetForDoctor extends Command {
-
+public class GetSortedPatientsForDoctorByBirthDate extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         int userId = (int) session.getAttribute("userId");
         Doctor doctor = new UserDAO().getDoctorByLoginId(userId);
         session.setAttribute("doctorId", doctor.getId());
-        List<Patient> patients = new PatientDAO().findSortedPatientsForDoctor(doctor.getId(), SQL_SORT_BY_ALPHABET);
+        List<Patient> patients = new PatientDAO().findSortedPatientsForDoctor(doctor.getId(), SQL_SORT_BY_BIRTH_DATE);
         request.setAttribute("patients", patients);
         return JspPaths.VIEW_PATIENTS;
     }

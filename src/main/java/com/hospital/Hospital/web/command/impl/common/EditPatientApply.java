@@ -13,10 +13,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class EditPatientApply extends Command {
+
+    private final PatientDAO patientDAO;
+
+    public EditPatientApply() {patientDAO = new PatientDAO();}
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        new PatientDAO().updatePatient(new Patient.PatientBuilder(request.getParameter("FirstName"), request.getParameter("LastName"))
+        patientDAO.updatePatient(new Patient.PatientBuilder(request.getParameter("FirstName"), request.getParameter("LastName"))
                 .diagnosis(request.getParameter("Diagnosis"))
                 .birthDate(LocalDate.parse(request.getParameter("BirthDate")))
                 .id(Integer.parseInt(request.getParameter("id")))

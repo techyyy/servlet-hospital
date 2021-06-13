@@ -3,7 +3,7 @@ package com.hospital.Hospital.db.impl;
 import com.hospital.Hospital.db.ConnectionPool;
 import com.hospital.Hospital.db.interfaces.PatientManager;
 import com.hospital.Hospital.model.Patient;
-import com.hospital.Hospital.model.PatientHasDoctor;
+import com.hospital.Hospital.model.PatientAssignment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +19,9 @@ public class PatientDAO implements PatientManager {
 
     private static final String SELECT_ALL_PATIENTS_ORDER_BY = "SELECT * FROM patient WHERE isDischarged = false ORDER BY %s";
     private static final String SELECT_ALL_PATIENTS = "SELECT * FROM patient WHERE isDischarged = false";
-    private static final String SELECT_PATIENTS_BY_DOCTOR_ID = "SELECT p.id, p.firstName, p.lastName, p.diagnosis, p.birthDate FROM patient_has_doctor pd\n" +
-            "            JOIN doctor d ON pd.doctor_id = d.id\n" +
-            "            JOIN patient p ON pd.patient_id = p.id\n" +
+    private static final String SELECT_PATIENTS_BY_DOCTOR_ID = "SELECT p.id, p.firstName, p.lastName, p.diagnosis, p.birthDate FROM patient_has_doctor pd" +
+            "            JOIN doctor d ON pd.doctor_id = d.id" +
+            "            JOIN patient p ON pd.patient_id = p.id" +
             "            WHERE d.id = ? AND p.isDischarged = false;";
     private static final String SELECT_PATIENTS_BY_DOCTOR_ID_ORDER_BY = "SELECT p.id, p.firstName, p.lastName, p.diagnosis, p.birthDate FROM patient_has_doctor pd\n" +
             "            JOIN doctor d ON pd.doctor_id = d.id\n" +
@@ -51,13 +51,14 @@ public class PatientDAO implements PatientManager {
             while (resultSet.next()) {
                 patients.add(getPatient(resultSet));
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return patients;
     }
@@ -73,13 +74,14 @@ public class PatientDAO implements PatientManager {
             while (resultSet.next()) {
                 patients.add(getPatient(resultSet));
             }
+            ConnectionPool.commit(connection);
         } catch (Exception e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return patients;
     }
@@ -94,13 +96,14 @@ public class PatientDAO implements PatientManager {
             while (resultSet.next()) {
                 patients.add(getPatient(resultSet));
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return patients;
     }
@@ -116,12 +119,13 @@ public class PatientDAO implements PatientManager {
             if(resultSet.next()) {
                 patient = getPatient(resultSet);
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return patient;
     }
@@ -132,12 +136,13 @@ public class PatientDAO implements PatientManager {
         try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_DISCHARGE)) {
             preparedStatement.setInt(1, patientId);
             preparedStatement.executeUpdate();
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return false;
         } finally {
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return true;
     }
@@ -152,30 +157,32 @@ public class PatientDAO implements PatientManager {
             preparedStatement.setDate(4, Date.valueOf(patient.getBirthDate()));
             preparedStatement.setInt(5, patient.getId());
             preparedStatement.executeUpdate();
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return false;
         } finally {
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return true;
     }
 
     @Override
-    public boolean updateTreatment(PatientHasDoctor phs) {
+    public boolean updateTreatment(PatientAssignment phs) {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try(PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_TREATMENT)) {
             preparedStatement.setString(1, phs.getTreatment());
             preparedStatement.setInt(2, phs.getDoctorId());
             preparedStatement.setInt(3, phs.getPatientId());
             preparedStatement.executeUpdate();
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return false;
         } finally {
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return true;
     }
@@ -189,13 +196,14 @@ public class PatientDAO implements PatientManager {
             while (resultSet.next()) {
                 patients.add(getPatient(resultSet));
             }
+            ConnectionPool.commit(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
+            ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
             ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
+            ConnectionPool.close(connection);
         }
         return patients;
     }

@@ -15,13 +15,18 @@ import java.io.IOException;
 import java.util.List;
 
 public class ViewPatientsByDoctor extends Command {
+
+    private final PatientDAO patientDAO;
+
+    public ViewPatientsByDoctor() {patientDAO = new PatientDAO();}
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         int userId = (int) session.getAttribute("userId");
         Doctor doctor = new UserDAO().getDoctorByLoginId(userId);
         session.setAttribute("doctorId", doctor.getId());
-        List<Patient> patients = new PatientDAO().findPatientsForDoctor(doctor.getId());
+        List<Patient> patients = patientDAO.findPatientsForDoctor(doctor.getId());
         request.setAttribute("patients", patients);
         return JspPaths.VIEW_PATIENTS;
     }

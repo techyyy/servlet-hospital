@@ -17,11 +17,16 @@ import static com.hospital.Hospital.util.Pagination.sublist;
 import static com.hospital.Hospital.web.constants.NumberConstants.NUMBER_OF_RECORDS_PER_PAGE;
 
 public class GetSortedDoctorsByAlphabet extends Command {
+
+    private final UserDAO userDAO;
+
+    public GetSortedDoctorsByAlphabet() {userDAO = new UserDAO(); }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int currentPage = Integer.parseInt(request.getParameter("page"));
         int offset = (currentPage-1)*NUMBER_OF_RECORDS_PER_PAGE;
-        List<Doctor> doctors = sublist(new UserDAO().getSortedDoctors(SQL_SORT_BY_ALPHABET), offset, offset+NUMBER_OF_RECORDS_PER_PAGE);
+        List<Doctor> doctors = sublist(userDAO.getSortedDoctors(SQL_SORT_BY_ALPHABET), offset, offset+NUMBER_OF_RECORDS_PER_PAGE);
         request.setAttribute("numberOfPages", numberOfPages(doctors));
         request.setAttribute("doctors", doctors);
         return JspPaths.VIEW_ALL_DOCTORS;

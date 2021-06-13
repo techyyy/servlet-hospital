@@ -43,21 +43,27 @@ public class ConnectionPool {
         }
     }
 
-    public static void commitAndClose(Connection con) {
+    public static void close(Connection con) {
         try {
-            con.commit();
             con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public static void rollbackAndClose(Connection con) {
+    public static void rollback(Connection con) {
         try {
             con.rollback();
-            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public static void commit(Connection con) {
+        try {
+            con.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

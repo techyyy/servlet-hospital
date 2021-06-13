@@ -10,9 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DischargePatient extends Command {
+
+    private final PatientDAO patientDAO;
+
+    public DischargePatient() {patientDAO = new PatientDAO();}
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        new PatientDAO().dischargePatient(Integer.parseInt(request.getParameter("patientId")));
+        patientDAO.dischargePatient(Integer.parseInt(request.getParameter("patientId")));
         return ServletPaths.SERVLET_VIEW_PATIENTS_BY_DOCTOR;
     }
 }

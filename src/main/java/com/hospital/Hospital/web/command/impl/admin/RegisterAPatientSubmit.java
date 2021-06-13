@@ -12,9 +12,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class RegisterAPatientSubmit extends Command {
+
+    private final UserDAO userDAO;
+
+    public RegisterAPatientSubmit() {userDAO = new UserDAO();}
+
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        new UserDAO().insertPatient(new Patient.PatientBuilder(request.getParameter("FirstName"), request.getParameter("LastName"))
+        userDAO.insertPatient(new Patient.PatientBuilder(request.getParameter("FirstName"), request.getParameter("LastName"))
                 .diagnosis(request.getParameter("Diagnosis"))
                 .birthDate(LocalDate.parse(request.getParameter("BirthDate")))
                 .build());

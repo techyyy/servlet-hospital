@@ -13,13 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegisterADoctorSubmit extends Command {
+
+    private final UserDAO userDAO;
+
+    public RegisterADoctorSubmit() {userDAO = new UserDAO();}
+
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        User user = new User.UserBuilder(request.getParameter("Username"), request.getParameter("Password"), Role.DOCTOR).build();
+        User user = new User.UserBuilder(request.getParameter("Username"), request.getParameter("Password"), Role.DOCTOR)
+                .build();
         Doctor doctor = new Doctor.DoctorBuilder(request.getParameter("FirstName"), request.getParameter("LastName"))
                 .position(request.getParameter("Position"))
                 .build();
-        new UserDAO().insertDoctor(doctor, user);
+        userDAO.insertDoctor(doctor, user);
 
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }

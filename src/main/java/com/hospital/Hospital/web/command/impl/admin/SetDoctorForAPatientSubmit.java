@@ -1,7 +1,7 @@
 package com.hospital.Hospital.web.command.impl.admin;
 
 import com.hospital.Hospital.db.impl.UserDAO;
-import com.hospital.Hospital.model.PatientHasDoctor;
+import com.hospital.Hospital.model.PatientAssignment;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.ServletPaths;
 
@@ -12,12 +12,17 @@ import java.io.IOException;
 
 public class SetDoctorForAPatientSubmit extends Command {
 
+    private final UserDAO userDAO;
+
+    public SetDoctorForAPatientSubmit() {userDAO = new UserDAO();}
+
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        PatientHasDoctor phd = new PatientHasDoctor(Integer.parseInt(request.getParameter("DoctorID")),
-                Integer.parseInt(request.getParameter("PatientID")),
-                "");
-        new UserDAO().insertPatientHasDoctor(phd);
+        PatientAssignment phd = new PatientAssignment.PatientAssignmentBuilder(Integer.parseInt(request.getParameter("DoctorID")),
+                Integer.parseInt(request.getParameter("PatientID")))
+                .build();
+        userDAO.insertPatientHasDoctor(phd);
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }
 }

@@ -13,11 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegisterANurseSubmit extends Command {
+
+    private final UserDAO userDAO;
+
+    public RegisterANurseSubmit() {userDAO = new UserDAO();}
+
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         User user = new User.UserBuilder(request.getParameter("Username"), request.getParameter("Password"), Role.NURSE).build();
         Nurse nurse = new Nurse.NurseBuilder(request.getParameter("FirstName"), request.getParameter("LastName")).build();
-        new UserDAO().insertNurse(nurse, user);
+        userDAO.insertNurse(nurse, user);
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }
 }
