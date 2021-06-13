@@ -12,6 +12,9 @@ public class ConnectionPool {
 
     private static ConnectionPool instance;
 
+    private ConnectionPool() {
+    }
+
     public static synchronized ConnectionPool getInstance() {
         if (instance == null)
             instance = new ConnectionPool();
@@ -30,15 +33,12 @@ public class ConnectionPool {
         return con;
     }
 
-    private ConnectionPool() {
-    }
-
     public static void close(ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();
             } catch (SQLException e) {
-                System.err.println("Can't close result set" + e.getMessage());
+                e.printStackTrace();
             }
         }
     }

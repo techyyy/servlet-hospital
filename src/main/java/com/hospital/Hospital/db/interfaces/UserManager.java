@@ -16,5 +16,4 @@ public interface UserManager {
     boolean insertPatientHasDoctor(PatientHasDoctor phd);
     List<DiseaseHistory> getHospitalCard(int patientId);
     List<Doctor> getSortedDoctors(String columnName);
-    List<Patient> getSortedPatients(String columnName);
 }

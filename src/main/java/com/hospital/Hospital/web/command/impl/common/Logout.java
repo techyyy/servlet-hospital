@@ -1,6 +1,5 @@
-package com.hospital.Hospital.web.command.impl.outofcontrol;
+package com.hospital.Hospital.web.command.impl.common;
 
-import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.JspPaths;
 
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 public class Logout extends Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();

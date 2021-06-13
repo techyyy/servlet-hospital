@@ -1,6 +1,5 @@
 package com.hospital.Hospital.web.command.impl.admin;
 
-import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.JspPaths;
 
@@ -11,7 +10,7 @@ import java.io.IOException;
 
 public class RegisterAPatient extends Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         return JspPaths.REGISTER_A_PATIENT;
     }
 }

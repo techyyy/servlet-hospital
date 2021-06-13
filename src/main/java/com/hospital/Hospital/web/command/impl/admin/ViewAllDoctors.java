@@ -2,7 +2,6 @@ package com.hospital.Hospital.web.command.impl.admin;
 
 import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.Doctor;
-import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.JspPaths;
 
@@ -19,7 +18,7 @@ import static com.hospital.Hospital.web.constants.NumberConstants.NUMBER_OF_RECO
 public class ViewAllDoctors extends Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int currentPage = Integer.parseInt(request.getParameter("page"));
         int offset = (currentPage-1)*NUMBER_OF_RECORDS_PER_PAGE;
         List<Doctor> doctors = sublist(new UserDAO().findAllDoctors(), offset, offset+NUMBER_OF_RECORDS_PER_PAGE);

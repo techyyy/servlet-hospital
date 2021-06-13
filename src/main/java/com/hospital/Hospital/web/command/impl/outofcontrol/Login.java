@@ -2,7 +2,6 @@ package com.hospital.Hospital.web.command.impl.outofcontrol;
 
 import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.user.User;
-import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.ServletPaths;
 
@@ -14,18 +13,8 @@ import java.io.IOException;
 
 public class Login extends Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType)
+    public String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        String result = null;
-        if (actionType == ActionType.POST) {
-            result = doPost(request, response);
-        } else {
-            result = null;
-        }
-        return result;
-    }
-
-    private String doPost(HttpServletRequest request, HttpServletResponse response) {
         String forward = null;
         HttpSession session = request.getSession();
 

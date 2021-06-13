@@ -1,6 +1,5 @@
 package com.hospital.Hospital.web.command.impl.outofcontrol;
 
-import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.ServletPaths;
 
@@ -11,7 +10,7 @@ import java.io.IOException;
 
 public class SetLanguage extends Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getSession().setAttribute("lang", request.getParameter("locale"));
         String uri = request.getParameter("uri");
         String query = request.getParameter("query");

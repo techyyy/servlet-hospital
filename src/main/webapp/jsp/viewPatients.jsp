@@ -35,7 +35,9 @@
 <table class="table shadow-lg p-4 mb-5 bg-white rounded" style = "margin-bottom: 100px;">
     <thead>
     <tr>
-        <th scope="col">id</th>
+        <c:if test = "${userRole == 'ADMIN'}">
+            <th scope="col">id</th>
+        </c:if>
         <th scope="col"><fmt:message key="label.first_name"/></th>
         <th scope="col"><fmt:message key="label.last_name"/></th>
         <th scope="col"><fmt:message key="label.diagnosis"/></th>
@@ -47,7 +49,9 @@
     <jsp:useBean id="patients" scope="request" type="java.util.List"/>
     <c:forEach items="${patients}" var="patient" varStatus="status">
         <tr>
-            <td><c:out value="${patient.id}"/></td>
+            <c:if test = "${userRole == 'ADMIN'}">
+                <td><c:out value="${patient.id}"/></td>
+            </c:if>
             <td><c:out value="${patient.firstName}"/></td>
             <td><c:out value="${patient.lastName}"/></td>
             <td><c:out value="${patient.diagnosis}"/></td>

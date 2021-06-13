@@ -1,47 +1,59 @@
 package com.hospital.Hospital.model;
 
 public class Nurse {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private int loginId;
+    private final int id;
+    private final String firstName;
+    private final String lastName;
+    private final int loginId;
 
-    public Nurse(int id, String firstName, String lastName, int loginId) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.loginId = loginId;
+    private Nurse(NurseBuilder builder) {
+        this.id = builder.id;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.loginId = builder.loginId;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getLastName() { return lastName; }
+
+    public int getLoginId() { return loginId; }
+
+
+    @Override
+    public String toString() {
+        return id+firstName+lastName+loginId;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public static class NurseBuilder {
+        private int id;
+        private final String firstName;
+        private final String lastName;
+        private int loginId;
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+        public NurseBuilder(String firstName, String lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
 
-    public int getLoginId() {
-        return loginId;
-    }
+        public NurseBuilder id(int id) {
+            this.id = id;
+            return this;
+        }
 
-    public void setLoginId(int loginId) {
-        this.loginId = loginId;
+        public NurseBuilder loginId(int loginId) {
+            this.loginId = loginId;
+            return this;
+        }
+
+        public Nurse build() {
+            return new Nurse(this);
+        }
     }
 }

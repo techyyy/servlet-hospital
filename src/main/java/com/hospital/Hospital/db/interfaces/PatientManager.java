@@ -9,6 +9,7 @@ public interface PatientManager {
     List<Patient> findPatientsForDoctor(int doctorId);
     List<Patient> findSortedPatientsForDoctor(int doctorId, String columnName);
     List<Patient> findAllPatients();
+    List<Patient> getSortedPatients(String columnName);
     Patient getPatientById(int id);
     boolean dischargePatient(int patientId);
     boolean updatePatient(Patient patient);

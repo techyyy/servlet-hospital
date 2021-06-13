@@ -34,7 +34,7 @@ public class MainServlet extends HttpServlet {
             command = new NullCase();
         }
         LOG.info("Obtained 'command' = " + command);
-        String path = command.execute(request, response, actionType);
+        String path = command.execute(request, response);
 
         if (path == null) {
             LOG.info("Redirect to address == null");

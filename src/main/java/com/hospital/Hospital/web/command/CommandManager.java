@@ -4,12 +4,12 @@ import com.hospital.Hospital.web.command.impl.*;
 import com.hospital.Hospital.web.command.impl.admin.*;
 import com.hospital.Hospital.web.command.impl.common.*;
 import com.hospital.Hospital.web.command.impl.doctor.DischargePatient;
-import com.hospital.Hospital.web.command.impl.doctor.SortMyPatientsByAlphabet;
-import com.hospital.Hospital.web.command.impl.doctor.SortMyPatientsByBirthDate;
+import com.hospital.Hospital.web.command.impl.doctor.GetSortedPatientsByAlphabetForDoctor;
+import com.hospital.Hospital.web.command.impl.doctor.GetSortedPatientsByBirthDateForDoctor;
 import com.hospital.Hospital.web.command.impl.doctor.ViewPatientsByDoctor;
 import com.hospital.Hospital.web.command.impl.nurse.Appointment;
 import com.hospital.Hospital.web.command.impl.outofcontrol.Login;
-import com.hospital.Hospital.web.command.impl.outofcontrol.Logout;
+import com.hospital.Hospital.web.command.impl.common.Logout;
 import com.hospital.Hospital.web.command.impl.outofcontrol.SetLanguage;
 
 import java.util.HashMap;
@@ -43,12 +43,12 @@ public class CommandManager {
         commands.put("logout", new Logout());
         commands.put("viewHospitalCard", new ViewHospitalCard());
         commands.put("setLanguage", new SetLanguage());
-        commands.put("sortDoctorsByAlphabet", new SortDoctorsByAlphabet());
-        commands.put("sortDoctorsByPosition", new SortDoctorsByPosition());
-        commands.put("sortMyPatientsByAlphabet", new SortMyPatientsByAlphabet());
-        commands.put("sortMyPatientsByBirthDate", new SortMyPatientsByBirthDate());
-        commands.put("sortAllPatientsByAlphabet", new SortAllPatientsByAlphabet());
-        commands.put("sortAllPatientsByBirthDate", new SortAllPatientsByBirthDate());
+        commands.put("sortDoctorsByAlphabet", new GetSortedDoctorsByAlphabet());
+        commands.put("sortDoctorsByPosition", new GetSortedDoctorsByPosition());
+        commands.put("sortMyPatientsByAlphabet", new GetSortedPatientsByAlphabetForDoctor());
+        commands.put("sortMyPatientsByBirthDate", new GetSortedPatientsByBirthDateForDoctor());
+        commands.put("sortAllPatientsByAlphabet", new GetSortedPatientsByAlphabet());
+        commands.put("sortAllPatientsByBirthDate", new GetSortedPatientsByBirthDate());
     }
 
     public static Command get(String name) {

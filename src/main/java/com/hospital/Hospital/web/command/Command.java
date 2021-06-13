@@ -1,7 +1,5 @@
 package com.hospital.Hospital.web.command;
 
-import com.hospital.Hospital.web.ActionType;
-
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -12,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class Command implements Serializable {
     private static final long serialVersionUID = 8879403039606311780L;
 
-    public abstract String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType)
+    public abstract String execute(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException;
 
     @Override

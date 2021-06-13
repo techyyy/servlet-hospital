@@ -2,51 +2,55 @@ package com.hospital.Hospital.model.user;
 
 public class User {
 
-    private int id;
-    private String username;
-    private String password;
-    private Role role;
+    private final int id;
+    private final String username;
+    private final String password;
+    private final Role role;
 
-    public User() {
-    }
-
-    public User(int id, String username, String password, Role role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    private User(UserBuilder builder) {
+        this.id = builder.id;
+        this.username = builder.username;
+        this.password = builder.password;
+        this.role = builder.role;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Role getRole() { return role; }
-
-    public void setRole(Role role) { this.role = role; }
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String toString() {
         return username+password+role;
     }
 
+    public static class UserBuilder {
+        private int id;
+        private final String username;
+        private final String password;
+        private final Role role;
+
+        public UserBuilder(String username, String password, Role role) {
+            this.username = username;
+            this.password = password;
+            this.role = role;
+        }
+
+        public UserBuilder id(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
 }

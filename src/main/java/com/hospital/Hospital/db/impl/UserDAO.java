@@ -6,15 +6,37 @@ import com.hospital.Hospital.model.*;
 import com.hospital.Hospital.model.user.Role;
 import com.hospital.Hospital.model.user.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-import static com.hospital.Hospital.db.Queries.*;
-
 public class UserDAO implements UserManager {
+
+    private static final String SELECT_USER_BY_LOGIN = "SELECT * FROM login WHERE username = ?";
+    private static final String SELECT_DOCTOR_BY_USER_ID = "SELECT * FROM doctor WHERE login_id = ?";
+    private static final String SELECT_ALL_DOCTORS = "SELECT * FROM doctor";
+    private static final String SELECT_ALL_DOCTORS_ORDER_BY = "SELECT * FROM doctor ORDER BY %s";
+    private static final String SELECT_DOCTOR_BY_ID = "SELECT * FROM doctor WHERE id = ?";
+    private static final String SELECT_PATIENT_CARD = "SELECT patient.firstName,patient.lastName,diagnosis,doctor.firstName,doctor.lastName,position,treatment" +
+            " FROM patient INNER JOIN patient_has_doctor " +
+            "ON patient.id = patient_has_doctor.patient_id " +
+            "INNER JOIN doctor " +
+            "ON doctor.id = patient_has_doctor.doctor_id" +
+            " WHERE patient.id = ?";
+
+    private static final String INSERT_INTO_USER_TABLE = "INSERT INTO login VALUES(0, ?, ?, ?)";
+    private static final String INSERT_INTO_DOCTOR_TABLE = "INSERT INTO doctor VALUES(0,?,?,?,?)";
+    private static final String INSERT_INTO_NURSE_TABLE = "INSERT INTO nurse VALUES(0,?,?,?)";
+    private static final String INSERT_INTO_PATIENT_TABLE = "INSERT INTO patient VALUES(0,?,?,?,?,?)";
+    private static final String INSERT_INTO_PATIENT_HAS_DOCTOR_TABLE = "INSERT INTO patient_has_doctor VALUES(?,?,'')";
+
     @Override
     public User getUserByLogin(String username) {
         User user = null;
@@ -24,11 +46,7 @@ public class UserDAO implements UserManager {
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
-                user = new User(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        Role.valueOf(resultSet.getString(4)));
+                user = getUser(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,12 +67,7 @@ public class UserDAO implements UserManager {
             preparedStatement.setString(1, Integer.toString(loginId));
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
-                doctor = new Doctor(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getInt(5));
+                doctor = getDoctor(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,13 +87,7 @@ public class UserDAO implements UserManager {
         try(Statement statement = connection.createStatement()) {
             resultSet = statement.executeQuery(SELECT_ALL_DOCTORS);
             while (resultSet.next()) {
-                Doctor doctor = new Doctor(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getInt(5));
-                doctors.add(doctor);
+                doctors.add(getDoctor(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,12 +109,7 @@ public class UserDAO implements UserManager {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
-                doctor = new Doctor(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getInt(5));
+                doctor = getDoctor(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,14 +132,14 @@ public class UserDAO implements UserManager {
             psLogin.setString(3, user.getRole().toString());
             psLogin.executeUpdate();
             resultSet = psLogin.getGeneratedKeys();
+            int id = 0;
             if (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                user.setId(id);
+                id = resultSet.getInt(1);
             }
             psDoctor.setString(1, doctor.getFirstName());
             psDoctor.setString(2, doctor.getLastName());
             psDoctor.setString(3, doctor.getPosition());
-            psDoctor.setInt(4, user.getId());
+            psDoctor.setInt(4, id);
             psDoctor.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,21 +157,21 @@ public class UserDAO implements UserManager {
         ResultSet resultSet = null;
         Connection connection = ConnectionPool.getInstance().getConnection();
         try(PreparedStatement psLogin = connection.prepareStatement(INSERT_INTO_USER_TABLE, Statement.RETURN_GENERATED_KEYS);
-            PreparedStatement psDoctor = connection.prepareStatement(INSERT_INTO_NURSE_TABLE)){
+            PreparedStatement psNurse = connection.prepareStatement(INSERT_INTO_NURSE_TABLE)){
             psLogin.setString(1, user.getUsername());
             psLogin.setString(2, user.getPassword());
             psLogin.setString(3, user.getRole().toString());
             psLogin.executeUpdate();
 
             resultSet = psLogin.getGeneratedKeys();
+            int id = 0;
             if (resultSet.next()) {
-                int id = resultSet.getInt(1);
-                user.setId(id);
+                id = resultSet.getInt(1);
             }
-            psDoctor.setString(1, nurse.getFirstName());
-            psDoctor.setString(2, nurse.getLastName());
-            psDoctor.setInt(3, user.getId());
-            psDoctor.executeUpdate();
+            psNurse.setString(1, nurse.getFirstName());
+            psNurse.setString(2, nurse.getLastName());
+            psNurse.setInt(3, id);
+            psNurse.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             ConnectionPool.rollbackAndClose(connection);
@@ -255,13 +257,7 @@ public class UserDAO implements UserManager {
         try(PreparedStatement ps = connection.prepareStatement(String.format(SELECT_ALL_DOCTORS_ORDER_BY, columnName))) {
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                Doctor doctor = new Doctor(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getInt(5));
-                doctors.add(doctor);
+                doctors.add(getDoctor(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -274,31 +270,20 @@ public class UserDAO implements UserManager {
         return doctors;
     }
 
-    @Override
-    public List<Patient> getSortedPatients(String columnName) {
-        ResultSet resultSet = null;
-        List<Patient> patients = new ArrayList<>();
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        try(PreparedStatement ps = connection.prepareStatement(String.format(SELECT_ALL_PATIENTS_ORDER_BY, columnName))) {
-            resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                Patient patient = new Patient(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getDate(5).toLocalDate());
-                patients.add(patient);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            ConnectionPool.rollbackAndClose(connection);
-            return Collections.emptyList();
-        } finally {
-            ConnectionPool.close(resultSet);
-            ConnectionPool.commitAndClose(connection);
-        }
-        return patients;
+    private Doctor getDoctor(ResultSet resultSet) throws SQLException {
+        return new Doctor.DoctorBuilder(resultSet.getString(2), resultSet.getString(3))
+                .position(resultSet.getString(4))
+                .id(resultSet.getInt(1))
+                .loginId(resultSet.getInt(5))
+                .build();
+    }
+
+    private User getUser(ResultSet resultSet) throws SQLException {
+        return new User.UserBuilder(resultSet.getString(2),
+                resultSet.getString(3),
+                Role.valueOf(resultSet.getString(4)))
+                .id(resultSet.getInt(1))
+                .build();
     }
 
 }

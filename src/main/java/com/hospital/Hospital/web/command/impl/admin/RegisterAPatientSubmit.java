@@ -2,7 +2,6 @@ package com.hospital.Hospital.web.command.impl.admin;
 
 import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.Patient;
-import com.hospital.Hospital.web.ActionType;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.ServletPaths;
 
@@ -10,18 +9,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class RegisterAPatientSubmit extends Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, ActionType actionType) throws IOException, ServletException {
-        Patient patient = new Patient(0,
-                request.getParameter("FirstName"),
-                request.getParameter("LastName"),
-                request.getParameter("Diagnosis"),
-                LocalDate.parse(request.getParameter("BirthDate")));
-        new UserDAO().insertPatient(patient);
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        new UserDAO().insertPatient(new Patient.PatientBuilder(request.getParameter("FirstName"), request.getParameter("LastName"))
+                .diagnosis(request.getParameter("Diagnosis"))
+                .birthDate(LocalDate.parse(request.getParameter("BirthDate")))
+                .build());
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }
 }
