@@ -3,6 +3,7 @@ package com.hospital.Hospital.web.command.impl.outofcontrol;
 import com.hospital.Hospital.db.impl.PatientDAO;
 import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.user.User;
+import com.hospital.Hospital.util.Hashing;
 import com.hospital.Hospital.web.command.Command;
 import com.hospital.Hospital.web.constants.ServletPaths;
 
@@ -25,7 +26,7 @@ public class Login extends Command {
         HttpSession session = request.getSession();
 
         String login = request.getParameter("Username");
-        String password = request.getParameter("Password");
+        String password = Hashing.hashMD5(request.getParameter("Password"));
 
         User user = userDAO.getUserByLogin(login);
 
