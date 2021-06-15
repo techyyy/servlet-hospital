@@ -42,6 +42,7 @@ public class PatientDAO implements PatientManager {
 
     @Override
     public List<Patient> findPatientsForDoctor(int doctorId) {
+
         ResultSet resultSet = null;
         List<Patient> patients = new ArrayList<>();
         Connection connection = ConnectionPool.getInstance().getConnection();

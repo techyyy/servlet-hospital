@@ -1,6 +1,5 @@
 package com.hospital.Hospital.web.command.impl.outofcontrol;
 
-import com.hospital.Hospital.db.impl.PatientDAO;
 import com.hospital.Hospital.db.impl.UserDAO;
 import com.hospital.Hospital.model.user.User;
 import com.hospital.Hospital.util.Hashing;
@@ -15,7 +14,7 @@ import java.io.IOException;
 
 public class Login extends Command {
 
-    private final UserDAO userDAO;
+    private static UserDAO userDAO;
 
     public Login() {userDAO = new UserDAO();}
 

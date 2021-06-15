@@ -211,7 +211,7 @@ public class UserDAO implements UserManager {
     }
 
     @Override
-    public boolean insertPatientHasDoctor(PatientAssignment phd) {
+    public boolean insertPatientAssignment(PatientAssignment phd) {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try(PreparedStatement ps = connection.prepareStatement(INSERT_INTO_PATIENT_HAS_DOCTOR_TABLE)){
             ps.setInt(1, phd.getDoctorId());

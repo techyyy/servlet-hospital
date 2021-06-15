@@ -1,16 +1,16 @@
 <footer class="my-5 pt-5 text-muted text-center text-small">
-  <form action="controller" method="post">
-    <input type="hidden" name="command" value="setLanguage"/>
-    <input type="hidden" name="locale" value="uk">
-    <input type="hidden" name="query" value="${requestScope['javax.servlet.forward.query_string']}"/>
-    <input type="hidden" name="uri" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-    <input alt="" width="20" height="15" type="image" src="https://upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Ukraine_%28pantone_colors%29.svg"/>
-  </form>
-  <form action="controller" method="post">
-    <input type="hidden" name="command" value="setLanguage"/>
-    <input type="hidden" name="locale" value="en">
-    <input type="hidden" name="query" value="${requestScope['javax.servlet.forward.query_string']}"/>
-    <input type="hidden" name="uri" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-    <input alt="" width="20" height="15" type="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/640px-Flag_of_the_United_Kingdom.svg.png"/>
-  </form>
+    <form action="controller" method="post">
+      <input type="hidden" name="command" value="setLanguage"/>
+      <input type="hidden" name="locale" value="uk">
+      <input type="hidden" name="query" value="${requestScope['javax.servlet.forward.query_string']}"/>
+      <input type="hidden" name="uri" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+      <input alt="" width="20" height="15" type="image" src="https://upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Ukraine_%28pantone_colors%29.svg"/>
+    </form>
+    <form action="controller" method="post">
+      <input type="hidden" name="command" value="setLanguage"/>
+      <input type="hidden" name="locale" value="en">
+      <input type="hidden" name="query" value="${requestScope['javax.servlet.forward.query_string']}"/>
+      <input type="hidden" name="uri" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+      <input alt="" width="20" height="15" type="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/640px-Flag_of_the_United_Kingdom.svg.png"/>
+    </form>
 </footer>

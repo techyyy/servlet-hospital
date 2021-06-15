@@ -24,7 +24,7 @@ public class SetTreatmentForPatientApply extends Command {
         if(!treatment.isEmpty()) {
             PatientAssignment pa = new PatientAssignment.PatientAssignmentBuilder(Integer.parseInt(session.getAttribute("doctorId").toString()),
                     Integer.parseInt(request.getParameter("patientId")))
-                    .diagnosis(treatment)
+                    .treatment(treatment)
                     .build();
             patientDAO.updateTreatment(pa);
         }

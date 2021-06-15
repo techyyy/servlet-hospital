@@ -10,7 +10,12 @@ import java.sql.SQLException;
 
 public class ConnectionPool {
 
+    public static DataSource ds;
     private static ConnectionPool instance;
+
+    public static void setDataSource(DataSource ds) {
+        ConnectionPool.ds = ds;
+    }
 
     private ConnectionPool() {
     }
@@ -20,13 +25,17 @@ public class ConnectionPool {
             instance = new ConnectionPool();
         return instance;
     }
+
     public Connection getConnection() {
         Connection con = null;
         try {
-            Context initContext = new InitialContext();
-            Context envContext  = (Context)initContext.lookup("java:/comp/env");
-            DataSource ds = (DataSource)envContext.lookup("jdbc/myhospital");
+            if(ds == null) {
+                Context initContext = new InitialContext();
+                Context envContext = (Context) initContext.lookup("java:/comp/env");
+                ds = (DataSource) envContext.lookup("jdbc/myhospital");
+            }
             con = ds.getConnection();
+            con.setAutoCommit(false);
         } catch (NamingException | SQLException ex) {
             ex.printStackTrace();
         }

@@ -13,7 +13,7 @@ public interface UserManager {
     boolean insertDoctor(Doctor doctor, User user);
     boolean insertNurse(Nurse nurse, User user);
     boolean insertPatient(Patient patient);
-    boolean insertPatientHasDoctor(PatientAssignment phd);
+    boolean insertPatientAssignment(PatientAssignment phd);
     List<DiseaseHistory> getHospitalCard(int patientId);
     List<Doctor> getSortedDoctors(String columnName);
 }

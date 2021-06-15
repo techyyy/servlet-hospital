@@ -32,7 +32,7 @@ public class PatientAssignment {
             this.doctorId = doctorId;
             this.patientId = patientId;
         }
-        public PatientAssignmentBuilder diagnosis(String treatment) {
+        public PatientAssignmentBuilder treatment(String treatment) {
             this.treatment = treatment;
             return this;
         }

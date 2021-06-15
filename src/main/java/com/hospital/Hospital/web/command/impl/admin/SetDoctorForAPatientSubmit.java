@@ -22,7 +22,7 @@ public class SetDoctorForAPatientSubmit extends Command {
         PatientAssignment phd = new PatientAssignment.PatientAssignmentBuilder(Integer.parseInt(request.getParameter("DoctorID")),
                 Integer.parseInt(request.getParameter("PatientID")))
                 .build();
-        userDAO.insertPatientHasDoctor(phd);
+        userDAO.insertPatientAssignment(phd);
         return ServletPaths.SERVLET_ADMIN_PANEL;
     }
 }
