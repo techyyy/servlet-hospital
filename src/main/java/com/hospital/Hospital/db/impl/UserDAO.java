@@ -58,7 +58,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't get user by login");
+            LOG.error("Can't get user by login" + e.getMessage());
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -80,7 +80,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't get doctor by login id");
+            LOG.error("Can't get doctor by login id" + e.getMessage());
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -101,7 +101,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't find all doctors");
+            LOG.error("Can't find all doctors" + e.getMessage());
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -124,7 +124,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't get doctor by id");
+            LOG.error("Can't get doctor by id" + e.getMessage());
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -155,7 +155,7 @@ public class UserDAO implements UserManager {
             psDoctor.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't insert doctor");
+            LOG.error("Can't insert doctor" + e.getMessage());
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -187,7 +187,7 @@ public class UserDAO implements UserManager {
             psNurse.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't insert nurse");
+            LOG.error("Can't insert nurse" + e.getMessage());
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -209,7 +209,7 @@ public class UserDAO implements UserManager {
             psPatient.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't insert patient");
+            LOG.error("Can't insert patient" + e.getMessage());
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -227,7 +227,7 @@ public class UserDAO implements UserManager {
             ps.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't insert patient assignment");
+            LOG.error("Can't insert patient assignment" + e.getMessage());
             ConnectionPool.rollback(connection);
             throw new SQLException("Invalid doctor or patient id");
         } finally {
@@ -256,7 +256,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't get hospital card");
+            LOG.error("Can't get hospital card" + e.getMessage());
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -278,7 +278,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't get sorted doctors");
+            LOG.error("Can't get sorted doctors" + e.getMessage());
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {

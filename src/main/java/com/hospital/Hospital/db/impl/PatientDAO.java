@@ -85,7 +85,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (Exception e) {
-            LOG.error("Can't find sorted patients for doctor");
+            LOG.error("Can't find sorted patients for doctor" + e.getMessage());
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -107,7 +107,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't find all patients");
+            LOG.error("Can't find all patients" + e.getMessage());
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -130,7 +130,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't get patient by id");
+            LOG.error("Can't get patient by id" + e.getMessage());
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -147,7 +147,7 @@ public class PatientDAO implements PatientManager {
             preparedStatement.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't discharge");
+            LOG.error("Can't discharge" + e.getMessage());
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -168,7 +168,7 @@ public class PatientDAO implements PatientManager {
             preparedStatement.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't update patient");
+            LOG.error("Can't update patient" + e.getMessage());
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -187,7 +187,7 @@ public class PatientDAO implements PatientManager {
             preparedStatement.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't update treatment");
+            LOG.error("Can't update treatment" + e.getMessage());
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -207,7 +207,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't get sorted patients");
+            LOG.error("Can't get sorted patients" + e.getMessage());
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {

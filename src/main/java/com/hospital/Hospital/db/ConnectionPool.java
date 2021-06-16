@@ -1,5 +1,8 @@
 package com.hospital.Hospital.db;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -8,7 +11,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class used for managing database connection
+ */
+
 public class ConnectionPool {
+
+    private static final Logger LOG = LogManager.getLogger(ConnectionPool.class);
 
     public static DataSource ds;
     private static ConnectionPool instance;
@@ -37,7 +46,7 @@ public class ConnectionPool {
             con = ds.getConnection();
             con.setAutoCommit(false);
         } catch (NamingException | SQLException ex) {
-            ex.printStackTrace();
+            LOG.error("Can't get connection" + ex.getMessage());
         }
         return con;
     }
@@ -47,7 +56,7 @@ public class ConnectionPool {
             try {
                 rs.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOG.error("Can't close result set" + e.getMessage());
             }
         }
     }
@@ -56,7 +65,7 @@ public class ConnectionPool {
         try {
             con.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            LOG.error("Can't close connection" + ex.getMessage());
         }
     }
 
@@ -64,7 +73,7 @@ public class ConnectionPool {
         try {
             con.rollback();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            LOG.error("Can't rollback" + ex.getMessage());
         }
     }
 
@@ -72,7 +81,7 @@ public class ConnectionPool {
         try {
             con.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't commit" + e.getMessage());
         }
     }
 }
