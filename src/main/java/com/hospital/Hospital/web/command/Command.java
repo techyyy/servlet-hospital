@@ -7,6 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *
+ * Abstract command class to be implemented by descendants
+ *
+ */
 public abstract class Command implements Serializable {
     private static final long serialVersionUID = 8879403039606311780L;
 

@@ -10,6 +10,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ *
+ * Access filter
+ *
+ */
 @WebFilter(filterName = "Filter")
 public class AccessFilter implements Filter {
     private static Map<Role, List<String>> accessMap = new HashMap<>();

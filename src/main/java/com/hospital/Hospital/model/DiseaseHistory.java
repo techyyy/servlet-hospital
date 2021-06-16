@@ -1,5 +1,11 @@
 package com.hospital.Hospital.model;
 
+
+/**
+ *
+ * DiseaseHistory entity used for join query
+ *
+ */
 public class DiseaseHistory {
     private final String patientFirstName;
     private final String patientLastName;

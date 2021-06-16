@@ -1,5 +1,10 @@
 package com.hospital.Hospital.model;
 
+/**
+ *
+ * PatientAssignment entity
+ *
+ */
 public class PatientAssignment {
     private final int doctorId;
     private final int patientId;

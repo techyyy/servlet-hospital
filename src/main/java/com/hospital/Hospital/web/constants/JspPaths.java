@@ -1,5 +1,10 @@
 package com.hospital.Hospital.web.constants;
 
+/**
+ *
+ * Jsp paths
+ *
+ */
 public class JspPaths {
     public static final String LOGIN_PAGE = "/index.jsp";
     public static final String MAIN_PAGE = "/jsp/main.jsp";

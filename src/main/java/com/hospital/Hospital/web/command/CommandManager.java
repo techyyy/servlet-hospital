@@ -15,6 +15,11 @@ import com.hospital.Hospital.web.command.impl.outofcontrol.SetLanguage;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * Class to map command names with implementations
+ *
+ */
 public class CommandManager {
     private static final Map<String, Command> commands = new HashMap<>();
 

@@ -1,4 +1,10 @@
 package com.hospital.Hospital.model;
+
+/**
+ *
+ * Doctor entity
+ *
+ */
 public class Doctor {
     private final int id;
     private final String firstName;

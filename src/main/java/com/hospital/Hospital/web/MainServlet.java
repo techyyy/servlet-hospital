@@ -9,6 +9,11 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ *
+ * Main controller
+ *
+ */
 public class MainServlet extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(String.valueOf(MainServlet.class));

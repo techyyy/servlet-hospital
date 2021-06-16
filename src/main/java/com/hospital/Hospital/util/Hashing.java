@@ -4,6 +4,12 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+/**
+ *
+ * Hashing utility class
+ *
+ */
 public class Hashing {
     public static String hashMD5(String input) {
         String result = "";

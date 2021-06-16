@@ -8,10 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Logger;
 
+
+/**
+ *
+ * Logout command
+ *
+ */
 public class Logout extends Command {
+    private static final Logger LOG = Logger.getLogger(String.valueOf(Logout.class));
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        LOG.info("Executing " + this.getClass().getSimpleName() + " command");
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();

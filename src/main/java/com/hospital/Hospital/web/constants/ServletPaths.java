@@ -1,5 +1,10 @@
 package com.hospital.Hospital.web.constants;
 
+/**
+ *
+ * Servlet paths
+ *
+ */
 public class ServletPaths {
     public static final String SERVLET_MAIN_PAGE = "/controller?command=main";
     public static final String SERVLET_VIEW_PATIENTS_BY_DOCTOR = "/controller?command=viewPatientsByDoctor";

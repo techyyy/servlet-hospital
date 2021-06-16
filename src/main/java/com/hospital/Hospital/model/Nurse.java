@@ -1,5 +1,10 @@
 package com.hospital.Hospital.model;
 
+/**
+ *
+ * Nurse entity
+ *
+ */
 public class Nurse {
     private final int id;
     private final String firstName;

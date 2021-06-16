@@ -2,6 +2,12 @@ package com.hospital.Hospital.model;
 
 import java.time.LocalDate;
 
+
+/**
+ *
+ * Patient entity
+ *
+ */
 public class Patient {
 
     private final int id;

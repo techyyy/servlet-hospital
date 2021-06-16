@@ -1,5 +1,10 @@
 package com.hospital.Hospital.model.user;
 
+/**
+ *
+ * User entity
+ *
+ */
 public class User {
 
     private final int id;

@@ -5,6 +5,12 @@ import java.util.List;
 
 import static com.hospital.Hospital.web.constants.NumberConstants.NUMBER_OF_RECORDS_PER_PAGE;
 
+
+/**
+ *
+ * Pagination utility class
+ *
+ */
 public class Pagination {
 
     public static<T> int numberOfPages(List<T> list){

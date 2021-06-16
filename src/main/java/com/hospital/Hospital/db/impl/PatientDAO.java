@@ -4,6 +4,8 @@ import com.hospital.Hospital.db.ConnectionPool;
 import com.hospital.Hospital.db.interfaces.PatientManager;
 import com.hospital.Hospital.model.Patient;
 import com.hospital.Hospital.model.PatientAssignment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +17,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Implementation of PatientManager interface.
+ */
+
 public class PatientDAO implements PatientManager {
+
+    private static final Logger LOG = LogManager.getLogger(PatientDAO.class);
 
     private static final String SELECT_ALL_PATIENTS_ORDER_BY = "SELECT * FROM patient WHERE isDischarged = false ORDER BY %s";
     private static final String SELECT_ALL_PATIENTS = "SELECT * FROM patient WHERE isDischarged = false";
@@ -54,7 +62,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't find patients for doctor");
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -77,7 +85,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Can't find sorted patients for doctor");
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -99,7 +107,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't find all patients");
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -122,7 +130,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't get patient by id");
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -139,7 +147,7 @@ public class PatientDAO implements PatientManager {
             preparedStatement.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't discharge");
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -160,7 +168,7 @@ public class PatientDAO implements PatientManager {
             preparedStatement.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't update patient");
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -179,7 +187,7 @@ public class PatientDAO implements PatientManager {
             preparedStatement.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't update treatment");
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -199,7 +207,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't get sorted patients");
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {

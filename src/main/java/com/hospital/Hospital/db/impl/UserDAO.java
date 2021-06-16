@@ -5,6 +5,8 @@ import com.hospital.Hospital.db.interfaces.UserManager;
 import com.hospital.Hospital.model.*;
 import com.hospital.Hospital.model.user.Role;
 import com.hospital.Hospital.model.user.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +19,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Implementation of UserManager interface.
+ */
+
 public class UserDAO implements UserManager {
+
+    private static final Logger LOG = LogManager.getLogger(UserDAO.class);
 
     private static final String SELECT_USER_BY_LOGIN = "SELECT * FROM login WHERE username = ?";
     private static final String SELECT_DOCTOR_BY_USER_ID = "SELECT * FROM doctor WHERE login_id = ?";
@@ -50,7 +58,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't get user by login");
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -72,7 +80,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't get doctor by login id");
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -93,7 +101,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't find all doctors");
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -116,7 +124,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't get doctor by id");
             ConnectionPool.rollback(connection);
         } finally {
             ConnectionPool.close(resultSet);
@@ -147,7 +155,7 @@ public class UserDAO implements UserManager {
             psDoctor.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't insert doctor");
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -179,7 +187,7 @@ public class UserDAO implements UserManager {
             psNurse.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't insert nurse");
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -201,7 +209,7 @@ public class UserDAO implements UserManager {
             psPatient.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't insert patient");
             ConnectionPool.rollback(connection);
             return false;
         } finally {
@@ -211,7 +219,7 @@ public class UserDAO implements UserManager {
     }
 
     @Override
-    public boolean insertPatientAssignment(PatientAssignment phd) {
+    public boolean insertPatientAssignment(PatientAssignment phd) throws SQLException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try(PreparedStatement ps = connection.prepareStatement(INSERT_INTO_PATIENT_HAS_DOCTOR_TABLE)){
             ps.setInt(1, phd.getDoctorId());
@@ -219,9 +227,9 @@ public class UserDAO implements UserManager {
             ps.executeUpdate();
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't insert patient assignment");
             ConnectionPool.rollback(connection);
-            return false;
+            throw new SQLException("Invalid doctor or patient id");
         } finally {
             ConnectionPool.close(connection);
         }
@@ -248,7 +256,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't get hospital card");
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
@@ -270,7 +278,7 @@ public class UserDAO implements UserManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Can't get sorted doctors");
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {
