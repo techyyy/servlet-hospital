@@ -62,7 +62,7 @@ public class PatientDAO implements PatientManager {
             }
             ConnectionPool.commit(connection);
         } catch (SQLException e) {
-            LOG.error("Can't find patients for doctor");
+            LOG.error("Can't find patients for doctor" + e.getMessage());
             ConnectionPool.rollback(connection);
             return Collections.emptyList();
         } finally {

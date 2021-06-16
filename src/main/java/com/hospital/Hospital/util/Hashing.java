@@ -1,5 +1,8 @@
 package com.hospital.Hospital.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +14,9 @@ import java.security.NoSuchAlgorithmException;
  *
  */
 public class Hashing {
+
+    private static final Logger LOG = LogManager.getLogger(Hashing.class);
+
     public static String hashMD5(String input) {
         String result = "";
         try {
@@ -19,7 +25,7 @@ public class Hashing {
             result = new BigInteger(1, m.digest()).toString(16);
             return result.toUpperCase();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            LOG.error("No such algorithm " + e.getMessage());
         }
         return result;
     }
