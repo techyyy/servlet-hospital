@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- *
  * Main controller
- *
  */
 public class MainServlet extends HttpServlet {
 
@@ -35,7 +33,7 @@ public class MainServlet extends HttpServlet {
         String commandName = request.getParameter("command");
         LOG.info("Request parameter: 'command' = " + commandName);
         Command command = CommandManager.get(commandName);
-        if(command == null) {
+        if (command == null) {
             command = new NullCase();
         }
         LOG.info("Obtained 'command' = " + command);
